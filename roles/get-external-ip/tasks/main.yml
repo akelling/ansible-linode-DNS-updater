@@ -1,0 +1,12 @@
+---
+# tasks file for get-external-ip
+#- name: Check that you can connect (GET) to a page and it returns a status 200
+#  uri:
+#    url: https://whatsmyip.milehighhacking.com
+
+- name: Pulling the external IP address from the local server
+  uri:
+    url: https://whatsmyip.milehighhacking.com
+    return_content: yes
+  register: externalip
+#  failed_when: "'AWESOME' not in this.content"

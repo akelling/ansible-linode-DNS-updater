@@ -1,0 +1,19 @@
+###############################################################################
+#                                                                             # 
+# Name:                                                                       #
+# Author: Andrew Kelling akelling@gmail.com                                   #
+# Date: Feb 13, 2021                                                          #
+# Updated: Feb 13, 2021                                                       #
+# Discription: The role goes out and gets your external IP address and sets   #
+# you're external IP to a Linode DNS entry and updates it                     #
+#                                                                             # 
+###############################################################################
+- hosts: localhost
+  become: true
+  vars_files:
+    - "./vault.yml"
+  gather_facts: no
+  roles:
+    - { role: get-external-ip, tags: [ 'get-external-ip' ] }
+    - { role: linode-dns-updater, tags: [ 'linode-dns-updater' ] }
+    - { role: linode-dns-updater-cron, tags: [ 'linode-dns-updater-cron' ] }

@@ -1,0 +1,8 @@
+---
+# tasks file for linode-dns-updater-cron
+- name: Setting up cron job to run the linode ip updated
+  ansible.builtin.cron:
+    name: "External IP update for gatekeeper"
+    minute: "0"
+    hour: "*"
+    job: "ansible-playbook /home/sharp/git/ansible/setting-external-dns-record-linode.yml"

@@ -1,0 +1,44 @@
+---
+#### Used for Debuging ####
+#- name: Print your external IP address
+#  ansible.builtin.debug:
+#    msg: External IP {{ externalip }}
+
+#- name:       
+#  uri:
+#    url: https://api.linode.com/v4/domains/1234567
+#    method: GET
+#    return_content: true
+#    headers:
+#      Authorization: Bearer {{ vault_linode_api_key }}
+#  register: linodedomains
+
+#- name: Printing your linode domains
+#  ansible.builtin.debug:
+#   msg: Linode Domains {{ linodedomains }}
+
+#- name: Print your external IP address
+#  ansible.builtin.debug:
+#    msg:  "{{ externalip.content|replace(' ', '')| trim }}"
+#### End Debugging code ####
+
+- name: Updating Gatekeepers IP to Linode
+  uri:
+    url: https://api.linode.com/v4/domains/1234567/records/987654321
+    method: PUT
+    headers:
+      Authorization: Bearer {{ vault_linode_api_key  }}
+    body_format: json
+    body:
+      type: "A"
+      name: "YOUR-A-Records-Name-Goes-HERE"
+      target: "{{ externalip.content|replace(' ', '')| trim }}"
+      priority: 50
+      port: 80
+      service: null
+      protocol: null
+#      ttl_sec: 604800
+      tag: null
+    status_code: [200, 202]
+    return_content: true
+  register: updateddns
