@@ -9,7 +9,7 @@
 #                                                                             # 
 ###############################################################################
 - hosts: localhost
-  become: true
+#  become: true
   vars_files:
     - "./vault.yml"
   gather_facts: no
